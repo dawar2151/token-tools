@@ -1,7 +1,3 @@
-Here's a well-structured GitHub README for the `BulkSender` smart contract:
-
----
-
 # BulkSender Smart Contract
 
 `BulkSender` is a Solidity smart contract that facilitates bulk transfers of ETH, ERC20, ERC721, and ERC1155 tokens. It includes a VIP system for reduced transaction fees and can be used for mass payouts or airdrops.
@@ -102,7 +98,3 @@ The contract owner can perform several administrative tasks:
 
 ## License
 This project is licensed under the MIT License.
-
----
-
-This README provides an overview of the `BulkSender` contract, highlighting its functions, usage, and administrative capabilities.
