@@ -76,6 +76,14 @@ contract BulkSender is Ownable, IBulkSender {
         txFee = _fee;
     }
 
+    function bulkTransfer(address[] calldata _receivers, uint[] calldata _values) external payable onlyAllowedAccount() {
+        require(_receivers.length == _values.length, InvalidInput());
+        for (uint i = 0; i < _receivers.length; i++) {
+            payable(_receivers[i]).transfer(_values[i]);
+        }
+        emit LogBulkSent(address(0),_receivers.length);
+    }
+
     /**
      * @dev bulk transfer erc20 tokens with same value
      * @param _tokenAddress address of the token

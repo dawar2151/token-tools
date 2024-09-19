@@ -11,7 +11,7 @@
   },
   "scripts": {
     "compile": "hardhat compile",
-    "test": "hardhat test",
+    "test": "hardhat test --network hardhat",
     "deploy": "npx hardhat ignition deploy ignition/modules/BulkSender.ts --network sepolia"
   }
 }

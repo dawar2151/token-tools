@@ -23,6 +23,7 @@ interface IBulkSender {
     
 
     event LogTokenBulkSent(address token, uint256 total);
+    event LogBulkSent(address token, uint256 total);
     event LogGetToken(address token, address receiver, uint256 balance);
     event LogViPRegistered(address sender, uint256 value);
 
