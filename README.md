@@ -39,7 +39,7 @@ The `BulkSender` contract facilitates bulk transfers of ETH, ERC20, ERC721, and 
 
 ### Prerequisites
 
-- Foundry and Forge ([Installation Guide](https://book.getfoundry.sh/getting-started/installation))
+- NodeJs
 
 ### Deployment Steps
 
