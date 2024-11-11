@@ -10,7 +10,7 @@ contract BulkSender is Ownable, IBulkSender {
         
     address public receiverAddress;
 
-    uint public txFee = 0.01 ether;
+    uint public txFee = 0.007 ether;
     uint public VIPFee = 0.1 ether;
 
     mapping(address => bool) private vipList;
@@ -18,7 +18,7 @@ contract BulkSender is Ownable, IBulkSender {
     modifier onlyAllowedAccount(){
         require(isVIP(msg.sender) || msg.value >= txFee, NotAllowedAccount());
         if (!isVIP(msg.sender)) {
-            payable(receiverAddress).transfer(msg.value);
+            payable(receiverAddress).transfer(txFee);
         }
         _;
     }
@@ -90,7 +90,7 @@ contract BulkSender is Ownable, IBulkSender {
      * @param _receivers array of receivers
      * @param _value amount of tokens to send
      */
-    function bulkTransferERC20(address _tokenAddress, address[] calldata _receivers, uint _value) external payable onlyAllowedAccount() {
+    function bulkTransferERC20(address _tokenAddress, address[] calldata _receivers, uint _value) external payable onlyAllowedAccount(){
 
         IERC20 token = IERC20(_tokenAddress);
 

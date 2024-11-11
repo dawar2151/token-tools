@@ -1,100 +1,62 @@
-# BulkSender Smart Contract
 
-`BulkSender` is a Solidity smart contract that facilitates bulk transfers of ETH, ERC20, ERC721, and ERC1155 tokens. It includes a VIP system for reduced transaction fees and can be used for mass payouts or airdrops.
+# Ethereum Bulk Sender
 
-## Features
-- **Bulk ETH Transfers**: Transfer ETH to multiple addresses in one transaction.
-- **Bulk ERC20 Transfers**: Send ERC20 tokens to multiple addresses, either with the same or varying amounts.
-- **Bulk ERC721 Transfers**: Send multiple ERC721 tokens to different addresses.
-- **Bulk ERC1155 Transfers**: Send multiple ERC1155 tokens (with different token IDs and values) to multiple recipients.
-- **VIP System**: Register as a VIP for reduced transaction fees.
-- **Customizable Fees**: Set the transaction fee and VIP registration fee.
+![Demo](./demo-bulk-sender.gif)
 
-## Table of Contents
-- [Installation](#installation)
-- [Usage](#usage)
-  - [Register as VIP](#register-as-vip)
-  - [Bulk Transfer ETH](#bulk-transfer-eth)
-  - [Bulk Transfer ERC20 Tokens](#bulk-transfer-erc20-tokens)
-  - [Bulk Transfer ERC721 Tokens](#bulk-transfer-erc721-tokens)
-  - [Bulk Transfer ERC1155 Tokens](#bulk-transfer-erc1155-tokens)
-- [Owner Functions](#owner-functions)
-- [Events](#events)
-- [License](#license)
+Ethereum Bulk Sender is a dApp designed for users who want to airdrop tokens or send tokens to multiple users in a few transactions, with customizable transaction fees. Built with Next.js.
 
-## Installation
-Clone this repository and install the necessary dependencies:
-
-```bash
-git clone https://github.com/dawar2151/x-wallet-bulksender-smart-contracts
-cd x-wallet-bulksender-smart-contracts
-```
+https://bulksendtokens.xyz/
 
 
-## Usage
+## 1) Presentation
 
-### Register as VIP
-To register as a VIP, users must send at least the `VIPFee`. This will give them access to lower transaction fees.
+Ethereum Bulk Sender allows users to efficiently distribute tokens via bulk transactions, minimizing fees.
 
-```solidity
-function registerVIP() public payable;
-```
 
-### Bulk Transfer ETH
-To send ETH to multiple addresses, use the `bulkTransfer` function. Ensure that the lengths of `_receivers` and `_values` match.
+## 2) What You Can Do With Bulk Sender
 
-```solidity
-function bulkTransfer(address[] calldata _receivers, uint[] calldata _values) external payable;
-```
+- **Airdrop Native Tokens:** Distribute ETH efficiently.
+- **Airdrop ERC20 Tokens:** Bulk transfer of ERC20 tokens.
+- **Airdrop ERC721 Tokens:** Send multiple ERC721 tokens.
+- **Airdrop ERC1155 Tokens:** Efficiently distribute ERC1155 tokens.
+- **VIP Membership:** Free usage for VIP members.
 
-### Bulk Transfer ERC20 Tokens
-To transfer ERC20 tokens, there are two functions:
-- **Same Value Transfer**: Send the same amount of tokens to multiple addresses.
-- **Different Values Transfer**: Send different amounts of tokens to multiple addresses.
 
-```solidity
-function bulkTransferERC20(address _tokenAddress, address[] calldata _receivers, uint _value) external payable;
+## 3) Disclaimer
 
-function bulkTransferERC20(address _tokenAddress, address[] calldata _receivers, uint[] calldata _values) external payable;
-```
+### Disclaimer
+The `BulkSender` contract facilitates bulk transfers of ETH, ERC20, ERC721, and ERC1155 tokens. Before use:
+- Test thoroughly in a safe environment.
+- Verify compatibility with target token contracts.
+- Understand gas costs and risks for large transactions.
 
-### Bulk Transfer ERC721 Tokens
-To send multiple ERC721 tokens to different addresses, use the following function:
+**Note:** Use at your own risk. Neither Foundry nor the authors are responsible for any losses.
 
-```solidity
-function bulkTransferERC721(address _tokenAddress, address[] calldata _receivers, uint[] calldata _tokenIds) external payable;
-```
 
-### Bulk Transfer ERC1155 Tokens
-For bulk transfers of ERC1155 tokens, use:
 
-```solidity
-function bulkTransferERC1155(address _tokenAddress, address[] calldata _receivers, uint[] calldata _tokenIds, uint[] calldata _values) external payable;
-```
 
-## Owner Functions
-The contract owner can perform several administrative tasks:
-- **Remove from VIP List**: Remove addresses from the VIP list.
-  ```solidity
-  function removeFromVIPList(address[] calldata _vipList) public onlyOwner;
-  ```
-- **Set Receiver Address**: Change the address to which the fees are sent.
-  ```solidity
-  function setReceiverAddress(address _addr) public onlyOwner;
-  ```
-- **Set VIP Fee**: Modify the VIP registration fee.
-  ```solidity
-  function setVIPFee(uint _fee) public onlyOwner;
-  ```
-- **Set Transaction Fee**: Modify the general transaction fee.
-  ```solidity
-  function setTxFee(uint _fee) public onlyOwner;
-  ```
+## 4) Deploy contracts
 
-## Events
-- `LogViPRegistered(address indexed vip, uint amount)` - Emitted when a VIP is registered.
-- `LogBulkSent(address indexed tokenAddress, uint count)` - Emitted when a bulk transfer is completed.
-- `LogTokenBulkSent(address indexed tokenAddress, uint count)` - Emitted after bulk token transfers (ERC20, ERC721, ERC1155).
+### Prerequisites
 
-## License
-This project is licensed under the MIT License.
+- Foundry and Forge ([Installation Guide](https://book.getfoundry.sh/getting-started/installation))
+
+### Deployment Steps
+
+1. **Create a `.env` file** in the root project directory:
+	```env
+INFURA_KEY=
+ETHERSCAN_KEY=
+PRIVATE_KEY=
+OWNER_ADDRESS=
+	```
+
+2. **Initialize submodules:**
+	```bash
+	npm i
+	```
+
+3. **Build and Deploy Contracts:**
+	```bash
+	npm run deploy:sepolia
+	```
