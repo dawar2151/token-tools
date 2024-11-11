@@ -13,6 +13,8 @@
     "compile": "hardhat compile",
     "test": "hardhat test --network hardhat",
     "deploy:sepolia": "npx hardhat ignition deploy ignition/modules/BulkSender.ts --network sepolia",
-    "deploy:mainnet": "npx hardhat ignition deploy ignition/modules/BulkSender.ts --network mainnet"
+    "deploy:mainnet": "npx hardhat ignition deploy ignition/modules/BulkSender.ts --network mainnet",
+    "verify:sepolia": "npx hardhat verify --network sepolia",
+    "verify:mainnet": "npx hardhat verify --network mainnet"
   }
 }

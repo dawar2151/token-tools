@@ -44,19 +44,23 @@ The `BulkSender` contract facilitates bulk transfers of ETH, ERC20, ERC721, and 
 ### Deployment Steps
 
 1. **Create a `.env` file** in the root project directory:
-	```env
+```env
 INFURA_KEY=
 ETHERSCAN_KEY=
 PRIVATE_KEY=
 OWNER_ADDRESS=
-	```
+```
 
 2. **Initialize submodules:**
-	```bash
-	npm i
-	```
+```bash
+npm i
+```
 
 3. **Build and Deploy Contracts:**
-	```bash
-	npm run deploy:sepolia
-	```
+```bash
+npm run deploy:sepolia
+```
+4. ** Verify contracts:**
+```bash
+npm run verify:sepolia CONTRACT_ADDRESS OWNER_ADDRESS
+```
