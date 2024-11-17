@@ -6,7 +6,7 @@ require('dotenv').config();
 
 
 const privateKey = process.env.PRIVATE_KEY;
-const infuraKey = process.env.INFURA_KEY;
+const infuraKey = process.env.INFURA_API_KEY;
 const etherscanKey = process.env.ETHERSCAN_KEY
 if(!privateKey){
   throw new Error("Private key missed");  
@@ -24,6 +24,10 @@ const config: HardhatUserConfig = {
     },
     sepolia: {
       url: `https://sepolia.infura.io/v3/${infuraKey}`,
+      accounts: [privateKey]
+    },
+    mainnet: {
+      url: `https://mainnet.infura.io/v3/${infuraKey}`,
       accounts: [privateKey]
     }
   },

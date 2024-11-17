@@ -15,7 +15,7 @@ import {
       // Contracts are deployed using the first signer/account by default
       const [owner, account1, account2, account3] = await hre.viem.getWalletClients();
   
-      const erc1155Tester = await hre.viem.deployContract("ERC1155Tester", [], {
+      const erc1155Tester = await hre.viem.deployContract("ERC1155Token", ["baseuri"], {
       });
       const erc1155BulkSender = await hre.viem.deployContract("BulkSender", [owner.account.address]);
   

@@ -16,7 +16,7 @@ describe("ERC20 Bulk Transfer", function () {
     // Contracts are deployed using the first signer/account by default
     const [owner, account1, account2, account3] = await hre.viem.getWalletClients();
 
-    const erc20Tester = await hre.viem.deployContract("ERC20Tester", [], {
+    const erc20Tester = await hre.viem.deployContract("ERC20Token", ["Name", "Symbol", 18, 1000000], {
     });
     const erc20BulkSender = await hre.viem.deployContract("BulkSender", [owner.account.address]);
 
