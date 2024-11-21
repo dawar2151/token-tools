@@ -1,3 +1,6 @@
 {
-  "BulkSender#BulkSender": "0x7F137a95c2bc78827442BA29545F4E675470a918"
+  "BulkSender#BulkSender": "0x7F137a95c2bc78827442BA29545F4E675470a918",
+  "ProxyModule#BulkSender": "0x37108980D58DBBfe68b2625B6C955783403eE4Be",
+  "ProxyModule#TransparentUpgradeableProxy": "0xae0909d3bd7a75231F01F92E507E9B231B42a596",
+  "ProxyModule#ProxyAdmin": "0x5667705b79a9C04914030FBB3e1d9F50F73E678B"
 }

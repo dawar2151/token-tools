@@ -31,5 +31,7 @@ interface IBulkSender {
 
     function registerVIP() external payable;
     function removeFromVIPList(address[] calldata _vipList) external;
-    
+    function txFee() external view returns (uint256);
+    function vipFee() external view returns (uint256);
+    function receiverAddress() external view returns (address);
 }

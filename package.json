@@ -1,13 +1,19 @@
 {
   "name": "hardhat-project",
   "devDependencies": {
+    "@nomicfoundation/hardhat-ethers": "^3.0.8",
     "@nomicfoundation/hardhat-toolbox-viem": "^3.0.0",
     "@nomicfoundation/hardhat-verify": "^2.0.10",
+    "@nomicfoundation/hardhat-viem": "^2.0.6",
     "dotenv": "^16.4.5",
-    "hardhat": "^2.22.9"
+    "ethers": "^6.13.4",
+    "hardhat": "^2.22.9",
+    "viem": "^2.21.49"
   },
   "dependencies": {
-    "@openzeppelin/contracts": "^5.0.2"
+    "@openzeppelin/contracts": "^5.0.2",
+    "@openzeppelin/contracts-upgradeable": "^5.1.0",
+    "@openzeppelin/hardhat-upgrades": "^3.5.0"
   },
   "scripts": {
     "compile": "hardhat compile",
