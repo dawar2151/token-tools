@@ -29,8 +29,14 @@ const config: HardhatUserConfig = {
     },
     mainnet: {
       url: `https://mainnet.infura.io/v3/${infuraKey}`,
-      accounts: [privateKey]
-    }
+      accounts: [privateKey],
+      gasPrice: 4000000000
+    },
+    bsc: {
+      url: `https://bsc-dataseed.binance.org/`,
+      accounts: [privateKey],
+      gasPrice: 1000000000
+    },
   },
   solidity: {
     version: "0.8.26", // any version you want
