@@ -16,6 +16,6 @@ contract ERC20Token is ERC20, Ownable {
         _burn(account, amount);
     }
     function decimals() public override view virtual returns (uint8) {
-        return 18;
+        return _decimals;
     }
 }
