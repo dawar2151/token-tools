@@ -3,6 +3,8 @@ import "@nomicfoundation/hardhat-toolbox-viem";
 import "@nomicfoundation/hardhat-verify";
 import "@nomicfoundation/hardhat-ethers";
 import '@openzeppelin/hardhat-upgrades';
+import "hardhat-gas-reporter"
+
 require('dotenv').config();
 
 

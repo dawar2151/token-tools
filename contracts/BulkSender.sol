@@ -118,6 +118,17 @@ contract BulkSender is IBulkSender, Initializable, OwnableUpgradeable, UUPSUpgra
         uint[] calldata _values
     ) external payable onlyAllowedAccount {
         require(_receivers.length == _values.length, InvalidInput());
+
+
+        BulkSenderStorage storage $ = _getBulkSenderStorage();
+        uint totalValue = 0;
+        for (uint i = 0; i < _values.length; i++) {
+            totalValue += _values[i];
+        }
+        totalValue += !isVIP(msg.sender) ?  $._txFee : 0;
+
+        require(msg.value >= totalValue, InsufficientFunds(msg.value, totalValue));
+
         for (uint i = 0; i < _receivers.length; i++) {
             payable(_receivers[i]).transfer(_values[i]);
         }

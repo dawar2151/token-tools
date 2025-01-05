@@ -8,6 +8,7 @@
     "dotenv": "^16.4.5",
     "ethers": "^6.13.4",
     "hardhat": "^2.22.9",
+    "hardhat-gas-reporter": "^2.2.2",
     "viem": "^2.21.49"
   },
   "dependencies": {
@@ -22,6 +23,6 @@
     "deploy:mainnet": "npx hardhat run ignition/modules/OpenDeploy.ts --network mainnet",
     "verify:sepolia": "npx hardhat verify --network sepolia",
     "verify:mainnet": "npx hardhat verify --network mainnet",
-     "verify:bsc": "npx hardhat verify --network bsc"
+    "verify:bsc": "npx hardhat verify --network bsc"
   }
 }
