@@ -17,7 +17,7 @@ import {
   
       const erc1155Tester = await hre.viem.deployContract("ERC1155Token", ["baseuri"], {
       });
-      const erc1155BulkSender = await hre.viem.deployContract("BulkSender", [owner.account.address]);
+      const erc1155BulkSender = await hre.viem.deployContract("BulkSender", []);
   
       const publicClient = await hre.viem.getPublicClient();
   

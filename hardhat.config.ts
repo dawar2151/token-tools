@@ -29,8 +29,7 @@ const config: HardhatUserConfig = {
     },
     mainnet: {
       url: `https://mainnet.infura.io/v3/${infuraKey}`,
-      accounts: [privateKey],
-      gasPrice: 4000000000
+      accounts: [privateKey]
     },
     bsc: {
       url: `https://bsc-dataseed.binance.org/`,
