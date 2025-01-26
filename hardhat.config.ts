@@ -1,8 +1,10 @@
 import type { HardhatUserConfig } from "hardhat/config";
-import "@nomicfoundation/hardhat-toolbox-viem";
 import "@nomicfoundation/hardhat-verify";
 import "@nomicfoundation/hardhat-ethers";
 import '@openzeppelin/hardhat-upgrades';
+
+ require("@nomicfoundation/hardhat-chai-matchers");
+
 require('dotenv').config();
 
 
