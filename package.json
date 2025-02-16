@@ -1,13 +1,14 @@
 {
   "name": "Token Tools",
   "devDependencies": {
-    "@nomicfoundation/hardhat-ethers": "^3.0.8",
-    "@nomicfoundation/hardhat-viem": "^2.0.6",
     "@nomicfoundation/hardhat-chai-matchers": "^2.0.8",
+    "@nomicfoundation/hardhat-ethers": "^3.0.8",
     "@nomicfoundation/hardhat-ignition": "^0.15.9",
+    "@nomicfoundation/hardhat-ignition-ethers": "^0.15.9",
     "@nomicfoundation/hardhat-ignition-viem": "^0.15.9",
     "@nomicfoundation/hardhat-network-helpers": "^1.0.12",
     "@nomicfoundation/hardhat-verify": "^2.0.10",
+    "@nomicfoundation/hardhat-viem": "^2.0.6",
     "@nomicfoundation/ignition-core": "^0.15.9",
     "@types/chai": "^4.3.20",
     "@types/chai-as-promised": "^7.1.8",
@@ -17,10 +18,10 @@
     "ethers": "^6.13.5",
     "hardhat": "^2.22.9",
     "hardhat-gas-reporter": "^2.2.2",
+    "prettier": "^3.0.0",
     "solidity-coverage": "^0.8.14",
     "ts-node": "^10.9.2",
-    "typescript": "^5.7.3",
-    "prettier": "^3.0.0"
+    "typescript": "^5.7.3"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^5.0.2",
@@ -31,6 +32,7 @@
     "compile": "hardhat compile",
     "test": "hardhat test --network hardhat",
     "deploy:sepolia": "npx hardhat run ignition/modules/OpenDeploy.ts --network sepolia",
+    "deploy-token-creator:sepolia": "npx hardhat run ignition/modules/TokenCreator.ts --network sepolia",
     "deploy:mainnet": "npx hardhat run ignition/modules/OpenDeploy.ts --network mainnet",
     "verify:sepolia": "npx hardhat verify --network sepolia",
     "verify:mainnet": "npx hardhat verify --network mainnet",

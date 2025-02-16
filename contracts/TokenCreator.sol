@@ -21,9 +21,7 @@ contract TokenCreator is Ownable {
     }
 
     function createERC20(string memory name, string memory symbol, uint8 decimals, uint256 initialSupply) external payable {
-        if (msg.value < creationFee) {
-            revert InsufficientFee();
-        }
+        require(msg.value >= creationFee, InsufficientFee());
         ERC20Token newToken = new ERC20Token(name, symbol, decimals, initialSupply);
         emit ERC20Created(address(newToken));
     }

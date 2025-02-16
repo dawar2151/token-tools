@@ -2,6 +2,8 @@ import type { HardhatUserConfig } from 'hardhat/config';
 import '@nomicfoundation/hardhat-verify';
 import '@nomicfoundation/hardhat-ethers';
 import '@openzeppelin/hardhat-upgrades';
+import "@nomicfoundation/hardhat-ignition-ethers";
+
 
 require('@nomicfoundation/hardhat-chai-matchers');
 
