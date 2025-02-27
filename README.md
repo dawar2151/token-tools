@@ -1,14 +1,14 @@
-# Ethereum Bulk Sender
+# Token Tools
 
 ![Demo](./demo-bulk-sender.gif)
 
-Ethereum Bulk Sender is a dApp designed for users who want to airdrop tokens or send tokens to multiple users in a few transactions, with customizable transaction fees. Built with Next.js.
+Token Tools is a dApp designed for users who want to airdrop tokens or send tokens to multiple users in a few transactions, with customizable transaction fees. Built with Next.js.
 
 https://bulksendtokens.xyz/
 
 ## 1) Presentation
 
-Ethereum Bulk Sender allows users to efficiently distribute tokens via bulk transactions, minimizing fees.
+Token Tools allows users to efficiently create, lock and distribute tokens via bulk transactions, minimizing fees.
 
 ## 2) What You Can Do With Bulk Sender
 
