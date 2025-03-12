@@ -24,6 +24,7 @@
     "typescript": "^5.7.3"
   },
   "dependencies": {
+    "@nomicfoundation/hardhat-ignition-ethers": "^0.15.9",
     "@openzeppelin/contracts": "^5.0.2",
     "@openzeppelin/contracts-upgradeable": "^5.1.0",
     "@openzeppelin/hardhat-upgrades": "^3.5.0"
