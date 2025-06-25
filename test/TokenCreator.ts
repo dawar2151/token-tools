@@ -3,11 +3,11 @@ import hre from 'hardhat';
 
 describe('TokenCreator', () => {
   let tokenCreator: any;
-
   beforeEach(async () => {
+    const [owner, account1, account2, account3] = await hre.ethers.getSigners();
     tokenCreator = await hre.ethers.deployContract(
       'TokenCreator',
-      [hre.ethers.parseEther('0.1')],
+      [hre.ethers.parseEther('0.1'), owner.address],
       {},
     );
   });
@@ -33,5 +33,24 @@ describe('TokenCreator', () => {
         value: hre.ethers.parseEther('0.1'),
       }),
     ).to.emit(tokenCreator, 'ERC1155Created');
+  });
+  it('should revert if the value is less than the required amount', async () => {
+    await expect(
+      tokenCreator.createERC20('TOS', 'TSA', 12, 1000, {
+        value: hre.ethers.parseEther('0.05'),
+      }),
+    ).to.be.revertedWithCustomError(tokenCreator, 'InsufficientFee');
+  });
+  //should withdraw fee test
+  it('should withdraw the fee correctly', async () => {
+    const [owner, account1] = await hre.ethers.getSigners();
+    const initialBalance = await hre.ethers.provider.getBalance(owner.address);
+    await tokenCreator.connect(account1).createERC20('TOS', 'TSA', 12, 1000, {
+      value: hre.ethers.parseEther('0.1'),
+    });
+    await tokenCreator.withdraw();
+
+    const finalBalance = await hre.ethers.provider.getBalance(owner.address);
+    expect(finalBalance).to.be.greaterThan(initialBalance);
   });
 });

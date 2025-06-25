@@ -14,7 +14,7 @@ describe(' Bulk Transfer', function () {
 
     await bulkSender.waitForDeployment();
 
-    await bulkSender.initialize(owner);
+    await bulkSender.initialize(owner.address, owner.address);
 
     return {
       bulkSender,

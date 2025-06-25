@@ -33,11 +33,11 @@ contract BulkSender is IBulkSender, Initializable, OwnableUpgradeable, UUPSUpgra
     }
     function _authorizeUpgrade(address newImplementation) internal override onlyOwner {}
 
-    function initialize(address receiverAddress) public initializer {
-        __Ownable_init(msg.sender);
+    function initialize(address _owner, address _receiverAddress) public initializer {
+        __Ownable_init(_owner);
         __UUPSUpgradeable_init();
         BulkSenderStorage storage $ = _getBulkSenderStorage();
-        $._receiverAddress = receiverAddress;
+        $._receiverAddress = _receiverAddress;
         $._txFee = 0.007 ether;
         $._vipFee = 0.1 ether;
     }

@@ -16,7 +16,7 @@ contract TokenCreator is Ownable {
 
     error InsufficientFee();
 
-    constructor(uint256 _creationFee) Ownable(msg.sender) {   
+    constructor(uint256 _creationFee, address _owner) Ownable(_owner) {   
         creationFee = _creationFee;
     }
 
@@ -27,22 +27,21 @@ contract TokenCreator is Ownable {
     }
 
     function createERC721(string memory name, string memory symbol) external payable {
-        if (msg.value < creationFee) {
-            revert InsufficientFee();
-        }
+        require(msg.value >= creationFee, InsufficientFee());
         ERC721Token newToken = new ERC721Token(name, symbol);
         emit ERC721Created(address(newToken));
     }
 
     function createERC1155(string memory uri) external payable {
-        if (msg.value < creationFee) {
-            revert InsufficientFee();
-        }
+        require(msg.value >= creationFee, InsufficientFee());
         ERC1155Token newToken = new ERC1155Token(uri);
         emit ERC1155Created(address(newToken));
     }
 
     function withdraw() external onlyOwner {
         payable(owner()).transfer(address(this).balance);
+    }
+    function setCreationFee(uint256 _creationFee) external onlyOwner {
+        creationFee = _creationFee;
     }
 }

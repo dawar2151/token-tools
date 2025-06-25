@@ -32,13 +32,9 @@
   "scripts": {
     "compile": "hardhat compile",
     "test": "hardhat test --network hardhat",
-    "deploy:sepolia": "npx hardhat run ignition/modules/BulkSenderProxyAndImplementation.ts --network sepolia",
-    "deploy-token-creator:sepolia": "npx hardhat ignition deploy ignition/modules/TokenCreator.ts --network sepolia",
-    "deploy-token-creator:mainnet": "npx hardhat ignition deploy ignition/modules/TokenCreator.ts --network mainnet",
-    "deploy:mainnet": "npx hardhat run ignition/modules/BulkSenderProxyAndImplementation.ts --network mainnet",
-    "verify:sepolia": "npx hardhat verify --network sepolia",
-    "verify:mainnet": "npx hardhat verify --network mainnet",
-    "verify:bsc": "npx hardhat verify --network bsc",
+    "deploy-token-creator": "npx hardhat ignition deploy ignition/modules/TokenCreator.ts",
+    "deploy-bulksender": "npx hardhat run ignition/modules/BulkSenderProxyAndImplementation.ts",
+    "verify": "npx hardhat verify",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   }
