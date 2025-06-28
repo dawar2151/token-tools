@@ -3,7 +3,6 @@
 pragma solidity ^0.8.26;
 
 interface ITokenLocker {
-
     error LockEndMustBeInTheFuture();
     error InsufficientLockedTokens();
     error LockPeriodHasNotEnded();

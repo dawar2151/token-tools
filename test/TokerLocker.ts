@@ -1,22 +1,22 @@
-import { ethers } from 'hardhat';
-import { expect } from 'chai';
+import { ethers } from "hardhat";
+import { expect } from "chai";
 
-describe('TokenLocker', function () {
-  const lockFee = ethers.parseEther('0.01');
-  const tokenAmount = ethers.parseEther('100');
+describe("TokenLocker", function () {
+  const lockFee = ethers.parseEther("0.01");
+  const tokenAmount = ethers.parseEther("100");
 
   async function deployTokenLockerFixture() {
     const [owner, user, feeCollector] = await ethers.getSigners();
 
-    const erc20Token = await ethers.deployContract('ERC20Token', [
-      'Name',
-      'Symbol',
+    const erc20Token = await ethers.deployContract("ERC20Token", [
+      "Name",
+      "Symbol",
       18,
-      ethers.parseUnits('1000000'),
+      ethers.parseUnits("1000000"),
     ]);
     await erc20Token.waitForDeployment();
 
-    const TokenLocker = await ethers.getContractFactory('TokenLocker');
+    const TokenLocker = await ethers.getContractFactory("TokenLocker");
     const tokenLocker = await TokenLocker.deploy(lockFee, feeCollector.address);
 
     await tokenLocker.waitForDeployment();
@@ -26,8 +26,8 @@ describe('TokenLocker', function () {
     return { erc20Token, tokenLocker, owner, user, feeCollector };
   }
 
-  describe('lockERC20', function () {
-    it('should lock ERC20 tokens successfully', async function () {
+  describe("lockERC20", function () {
+    it("should lock ERC20 tokens successfully", async function () {
       const { erc20Token, tokenLocker, user } =
         await deployTokenLockerFixture();
       const lockDuration = 3600;
@@ -42,11 +42,11 @@ describe('TokenLocker', function () {
             value: lockFee,
           }),
       )
-        .to.emit(tokenLocker, 'Locked')
+        .to.emit(tokenLocker, "Locked")
         .withArgs(user.address, erc20Token.target, tokenAmount, endLockTime);
     });
 
-    it('should revert if lock fee is insufficient', async function () {
+    it("should revert if lock fee is insufficient", async function () {
       const { erc20Token, tokenLocker, user } =
         await deployTokenLockerFixture();
       const lockDuration = 3600;
@@ -60,12 +60,12 @@ describe('TokenLocker', function () {
           .lockERC20(erc20Token.target, tokenAmount, endLockTime, {
             value: lockFee - BigInt(1),
           }),
-      ).to.be.revertedWithCustomError(tokenLocker, 'InsufficientFee');
+      ).to.be.revertedWithCustomError(tokenLocker, "InsufficientFee");
     });
   });
 
-  describe('unlockERC20', function () {
-    it('should unlock ERC20 tokens successfully', async function () {
+  describe("unlockERC20", function () {
+    it("should unlock ERC20 tokens successfully", async function () {
       const { erc20Token, tokenLocker, user } =
         await deployTokenLockerFixture();
       const lockDuration = 3600;
@@ -79,17 +79,17 @@ describe('TokenLocker', function () {
           value: lockFee,
         });
 
-      await ethers.provider.send('evm_increaseTime', [lockDuration + 1]);
-      await ethers.provider.send('evm_mine', []);
+      await ethers.provider.send("evm_increaseTime", [lockDuration + 1]);
+      await ethers.provider.send("evm_mine", []);
 
       await expect(
         tokenLocker.connect(user).unlockERC20(erc20Token.target, tokenAmount),
       )
-        .to.emit(tokenLocker, 'Unlocked')
+        .to.emit(tokenLocker, "Unlocked")
         .withArgs(user.address, erc20Token.target, tokenAmount);
     });
 
-    it('should revert if unlock is attempted before lock period ends', async function () {
+    it("should revert if unlock is attempted before lock period ends", async function () {
       const { erc20Token, tokenLocker, user } =
         await deployTokenLockerFixture();
       const lockDuration = 3600;
@@ -110,30 +110,30 @@ describe('TokenLocker', function () {
 
       await expect(
         tokenLocker.connect(user).unlockERC20(erc20Token.target, tokenAmount),
-      ).to.be.revertedWithCustomError(tokenLocker, 'LockPeriodHasNotEnded');
+      ).to.be.revertedWithCustomError(tokenLocker, "LockPeriodHasNotEnded");
     });
   });
 
-  describe('setLockFee', function () {
-    it('should allow fee collector to update the lock fee', async function () {
+  describe("setLockFee", function () {
+    it("should allow fee collector to update the lock fee", async function () {
       const { tokenLocker, feeCollector } = await deployTokenLockerFixture();
-      const newFee = ethers.parseEther('0.02');
+      const newFee = ethers.parseEther("0.02");
 
       await expect(tokenLocker.connect(feeCollector).setLockFee(newFee))
-        .to.emit(tokenLocker, 'LockFeeUpdated')
+        .to.emit(tokenLocker, "LockFeeUpdated")
         .withArgs(newFee);
 
       const updatedFee = await tokenLocker.lockFee();
       expect(updatedFee).to.equal(newFee);
     });
 
-    it('should revert if non-fee collector tries to update the lock fee', async function () {
+    it("should revert if non-fee collector tries to update the lock fee", async function () {
       const { tokenLocker, user } = await deployTokenLockerFixture();
-      const newFee = ethers.parseEther('0.02');
+      const newFee = ethers.parseEther("0.02");
 
       await expect(
         tokenLocker.connect(user).setLockFee(newFee),
-      ).to.be.revertedWithCustomError(tokenLocker, 'OnlyFreeCollectorAllowed');
+      ).to.be.revertedWithCustomError(tokenLocker, "OnlyFreeCollectorAllowed");
     });
   });
 });

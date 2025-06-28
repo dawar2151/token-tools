@@ -21,11 +21,7 @@ contract BulkSenderV2 is IBulkSender, Initializable, OwnableUpgradeable {
     bytes32 private constant BulkSenderStorageLocation =
         0xa9b8ea93cd1a4e28b0276278267515f30a34f7de34d3bc6de92b1e97a9a6b700;
 
-    function _getBulkSenderStorage()
-        private
-        pure
-        returns (BulkSenderStorage storage $)
-    {
+    function _getBulkSenderStorage() private pure returns (BulkSenderStorage storage $) {
         assembly {
             $.slot := BulkSenderStorageLocation
         }
@@ -43,10 +39,7 @@ contract BulkSenderV2 is IBulkSender, Initializable, OwnableUpgradeable {
 
     modifier onlyAllowedAccount() {
         BulkSenderStorage storage $ = _getBulkSenderStorage();
-        require(
-            isVIP(msg.sender) || msg.value >= $._txFee,
-            NotAllowedAccount()
-        );
+        require(isVIP(msg.sender) || msg.value >= $._txFee, NotAllowedAccount());
         if (!isVIP(msg.sender)) {
             payable($._receiverAddress).transfer($._txFee);
         }
@@ -58,10 +51,7 @@ contract BulkSenderV2 is IBulkSender, Initializable, OwnableUpgradeable {
      */
     function registerVIP() public payable {
         BulkSenderStorage storage $ = _getBulkSenderStorage();
-        require(
-            msg.value >= $._vipFee,
-            InsufficientFunds(msg.value, $._vipFee)
-        );
+        require(msg.value >= $._vipFee, InsufficientFunds(msg.value, $._vipFee));
         require(!isVIP(msg.sender), AlreadyVIP());
         payable($._receiverAddress).transfer(msg.value);
         $._vipList[msg.sender] = true;
@@ -110,10 +100,7 @@ contract BulkSenderV2 is IBulkSender, Initializable, OwnableUpgradeable {
         $._txFee = _fee;
     }
 
-    function bulkTransfer(
-        address[] calldata _receivers,
-        uint[] calldata _values
-    ) external payable onlyAllowedAccount {
+    function bulkTransfer(address[] calldata _receivers, uint[] calldata _values) external payable onlyAllowedAccount {
         require(_receivers.length == _values.length, InvalidInput());
         for (uint i = 0; i < _receivers.length; i++) {
             payable(_receivers[i]).transfer(_values[i]);
@@ -193,21 +180,11 @@ contract BulkSenderV2 is IBulkSender, Initializable, OwnableUpgradeable {
         uint[] calldata _tokenIds,
         uint[] calldata _values
     ) external payable onlyAllowedAccount {
-        require(
-            _receivers.length == _tokenIds.length &&
-                _receivers.length == _values.length,
-            InvalidInput()
-        );
+        require(_receivers.length == _tokenIds.length && _receivers.length == _values.length, InvalidInput());
         IERC1155 token = IERC1155(_tokenAddress);
 
         for (uint i = 0; i < _receivers.length; i++) {
-            token.safeTransferFrom(
-                msg.sender,
-                _receivers[i],
-                _tokenIds[i],
-                _values[i],
-                ""
-            );
+            token.safeTransferFrom(msg.sender, _receivers[i], _tokenIds[i], _values[i], "");
         }
         emit LogTokenBulkSent(_tokenAddress, _receivers.length);
     }

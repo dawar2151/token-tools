@@ -25,10 +25,7 @@ contract TokenLocker is ITokenLocker {
     modifier onlyExistingLock(address token, uint256 amount) {
         Lock memory userLock = locks[msg.sender][token];
         require(userLock.amount >= amount, InsufficientLockedTokens());
-        require(
-            userLock.endLockTime <= block.timestamp,
-            LockPeriodHasNotEnded()
-        );
+        require(userLock.endLockTime <= block.timestamp, LockPeriodHasNotEnded());
         _;
     }
 
@@ -38,11 +35,7 @@ contract TokenLocker is ITokenLocker {
         emit LockFeeUpdated(_lockFee);
     }
 
-    function lockERC20(
-        address token,
-        uint256 amount,
-        uint256 endLockTime
-    ) external payable onlyValidLock(endLockTime) {
+    function lockERC20(address token, uint256 amount, uint256 endLockTime) external payable onlyValidLock(endLockTime) {
         require(msg.value >= lockFee, InsufficientFee());
         Lock storage userLock = locks[msg.sender][token];
         require(userLock.amount == 0, UserHasOngoingLock());
@@ -60,10 +53,7 @@ contract TokenLocker is ITokenLocker {
         emit Locked(msg.sender, token, amount, endLockTime);
     }
 
-    function unlockERC20(
-        address token,
-        uint256 amount
-    ) external onlyExistingLock(token, amount) {
+    function unlockERC20(address token, uint256 amount) external onlyExistingLock(token, amount) {
         // Update lock details
         Lock storage userLock = locks[msg.sender][token];
         userLock.amount -= amount;
@@ -73,10 +63,7 @@ contract TokenLocker is ITokenLocker {
         emit Unlocked(msg.sender, token, amount);
     }
 
-    function getLockDetails(
-        address user,
-        address token
-    ) external view returns (uint256 amount, uint256 endLockTime) {
+    function getLockDetails(address user, address token) external view returns (uint256 amount, uint256 endLockTime) {
         Lock memory userLock = locks[user][token];
         return (userLock.amount, userLock.endLockTime);
     }

@@ -7,7 +7,6 @@ import "./tokens/ERC1155.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract TokenCreator is Ownable {
-
     uint256 public creationFee;
 
     event ERC20Created(address tokenAddress);
@@ -16,11 +15,16 @@ contract TokenCreator is Ownable {
 
     error InsufficientFee();
 
-    constructor(uint256 _creationFee, address _owner) Ownable(_owner) {   
+    constructor(uint256 _creationFee, address _owner) Ownable(_owner) {
         creationFee = _creationFee;
     }
 
-    function createERC20(string memory name, string memory symbol, uint8 decimals, uint256 initialSupply) external payable {
+    function createERC20(
+        string memory name,
+        string memory symbol,
+        uint8 decimals,
+        uint256 initialSupply
+    ) external payable {
         require(msg.value >= creationFee, InsufficientFee());
         ERC20Token newToken = new ERC20Token(name, symbol, decimals, initialSupply);
         emit ERC20Created(address(newToken));

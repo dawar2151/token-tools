@@ -3,7 +3,6 @@
 pragma solidity ^0.8.26;
 
 interface IBulkSender {
-
     error Unauthorized();
     error InvalidInput();
     error NotAllowedAccount();
@@ -22,7 +21,6 @@ interface IBulkSender {
     error AlreadyNormalAddress();
     error NotToken();
     error AlreadyToken();
-    
 
     event LogTokenBulkSent(address token, uint256 total);
     event LogBulkSent(address token, uint256 total);

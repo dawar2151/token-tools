@@ -1,8 +1,8 @@
-import { expect } from 'chai';
-import hre from 'hardhat';
-import { parseEther } from 'ethers';
+import { expect } from "chai";
+import hre from "hardhat";
+import { parseEther } from "ethers";
 
-describe('ERC1155 Bulk Transfer', function () {
+describe("ERC1155 Bulk Transfer", function () {
   // We define a fixture to reuse the same setup in every test.
   // We use loadFixture to run this setup once, snapshot that state,
   // and reset Hardhat Network to that snapshot in every test.
@@ -11,11 +11,11 @@ describe('ERC1155 Bulk Transfer', function () {
     const [owner, account1, account2, account3] = await hre.ethers.getSigners();
 
     const erc1155Tester = await hre.ethers.deployContract(
-      'ERC1155Token',
-      ['baseuri'],
+      "ERC1155Token",
+      ["baseuri"],
       {},
     );
-    const erc1155BulkSender = await hre.ethers.deployContract('BulkSender', []);
+    const erc1155BulkSender = await hre.ethers.deployContract("BulkSender", []);
 
     return {
       erc1155Tester,
@@ -27,8 +27,8 @@ describe('ERC1155 Bulk Transfer', function () {
     };
   }
 
-  describe('Deployment', function () {
-    it('Should make bulk transfer with the same value', async function () {
+  describe("Deployment", function () {
+    it("Should make bulk transfer with the same value", async function () {
       const {
         erc1155Tester,
         erc1155BulkSender,
@@ -56,7 +56,7 @@ describe('ERC1155 Bulk Transfer', function () {
           [BigInt(tokenId1)],
           [BigInt(100)],
           {
-            value: parseEther('0.1'),
+            value: parseEther("0.1"),
           },
         );
       expect(await erc1155Tester.balanceOf(account2, BigInt(tokenId1))).to.eqls(

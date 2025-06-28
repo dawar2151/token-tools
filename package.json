@@ -19,6 +19,7 @@
     "hardhat": "^2.22.9",
     "hardhat-gas-reporter": "^2.2.2",
     "prettier": "^3.0.0",
+    "prettier-plugin-solidity": "^1.4.3",
     "solidity-coverage": "^0.8.14",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.3"
@@ -35,7 +36,7 @@
     "deploy-token-creator": "npx hardhat ignition deploy ignition/modules/TokenCreator.ts",
     "deploy-bulksender": "npx hardhat run ignition/modules/BulkSenderProxyAndImplementation.ts",
     "verify": "npx hardhat verify",
-    "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format": "prettier --write \"**/*.{ts,sol}\"",
+    "format:check": "prettier --check \"**/*.{ts,sol}\""
   }
 }
