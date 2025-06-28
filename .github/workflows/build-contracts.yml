@@ -12,6 +12,16 @@ jobs:
   build-and-test:
     name: Build and Test Contracts
     runs-on: ubuntu-latest
+    environment: dev
+    env:
+      INFURA_API_KEY: ${{ vars.INFURA_API_KEY }}
+      OWNER_ADDRESS: ${{ vars.OWNER_ADDRESS }}
+      TOKEN_CREATOR_FEE: ${{ vars.TOKEN_CREATOR_FEE }}
+      FEE_RECEIVER_ADDRESS: ${{ vars.FEE_RECEIVER_ADDRESS }}
+      ETHERSCAN_KEY: ${{ vars.ETHERSCAN_KEY }}
+      ALCHEMY_API_KEY: ${{ vars.ALCHEMY_API_KEY }}
+      TATUM_API_KEY: ${{ vars.TATUM_API_KEY }}
+      PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
