@@ -1,0 +1,47 @@
+name: Build and Test Smart Contracts
+
+on:
+  pull_request: {}
+  push:
+    branches:
+      - main
+  release:
+    types: [created]
+
+jobs:
+  build-and-test:
+    name: Build and Test Contracts
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Compile contracts
+        run: npm run compile
+
+      - name: Run unit tests
+        run: npm run test
+
+      - name: Check code formatting
+        run: npm run format:check
+
+  check-branch:
+    name: Check branch for release
+    if: github.event_name == 'release'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fail if not on main branch
+        run: |
+          if [[ "${{ github.ref }}" != "refs/heads/main" && "${{ github.event.release.target_commitish }}" != "main" ]]; then
+            echo "Releases are only allowed from the main branch."
+            exit 1
+          fi
