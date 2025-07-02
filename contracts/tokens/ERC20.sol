@@ -10,8 +10,9 @@ contract ERC20Token is ERC20, Ownable {
         string memory name,
         string memory symbol,
         uint8 _customDecimals,
-        uint256 totalSupply
-    ) ERC20(name, symbol) Ownable(msg.sender) {
+        uint256 totalSupply,
+        address owner
+    ) ERC20(name, symbol) Ownable(owner) {
         _mint(msg.sender, totalSupply * 10 ** _customDecimals);
         _decimals = _customDecimals;
     }

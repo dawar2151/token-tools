@@ -11,6 +11,7 @@ describe("ERC20 Bulk Transfer", function () {
       "Symbol",
       18,
       1000000,
+      owner.address, // Owner address for the ERC20 token
     ]);
     const erc20BulkSender = await hre.ethers.deployContract("BulkSender", []);
     await erc20BulkSender.waitForDeployment();

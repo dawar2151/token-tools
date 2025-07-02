@@ -26,19 +26,19 @@ contract TokenCreator is Ownable {
         uint256 initialSupply
     ) external payable {
         require(msg.value >= creationFee, InsufficientFee());
-        ERC20Token newToken = new ERC20Token(name, symbol, decimals, initialSupply);
+        ERC20Token newToken = new ERC20Token(name, symbol, decimals, initialSupply, msg.sender);
         emit ERC20Created(address(newToken));
     }
 
     function createERC721(string memory name, string memory symbol) external payable {
         require(msg.value >= creationFee, InsufficientFee());
-        ERC721Token newToken = new ERC721Token(name, symbol);
+        ERC721Token newToken = new ERC721Token(name, symbol, msg.sender);
         emit ERC721Created(address(newToken));
     }
 
     function createERC1155(string memory uri) external payable {
         require(msg.value >= creationFee, InsufficientFee());
-        ERC1155Token newToken = new ERC1155Token(uri);
+        ERC1155Token newToken = new ERC1155Token(uri, msg.sender);
         emit ERC1155Created(address(newToken));
     }
 

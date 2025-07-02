@@ -1,0 +1,166 @@
+{
+  "manifestVersion": "3.2",
+  "proxies": [
+    {
+      "address": "0xb610541c1366448A57528575537eC0d12Dc8781F",
+      "txHash": "0x3fa2328c753d86e4adc60ae19a7f9fa9cb5af3177bb1f558126821109fe35ab3",
+      "kind": "uups"
+    }
+  ],
+  "impls": {
+    "385d67452d2a39f1f3012d60e120b8c2fee8aae6d02588d73748e35b581b74b4": {
+      "address": "0xfdf5a2808e2C21008987D258a18B17b1005198eC",
+      "txHash": "0xf3b3f0370c84b836a032900361e756faa76d0690033ab003f739b003c4e2cfd4",
+      "layout": {
+        "solcVersion": "0.8.26",
+        "storage": [],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(BulkSenderStorage)3257_storage": {
+            "label": "struct BulkSender.BulkSenderStorage",
+            "members": [
+              {
+                "label": "_receiverAddress",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "_txFee",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "_vipFee",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "_vipList",
+                "type": "t_mapping(t_address,t_bool)",
+                "offset": 0,
+                "slot": "3"
+              }
+            ],
+            "numberOfBytes": "128"
+          },
+          "t_struct(InitializableStorage)73_storage": {
+            "label": "struct Initializable.InitializableStorage",
+            "members": [
+              {
+                "label": "_initialized",
+                "type": "t_uint64",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "_initializing",
+                "type": "t_bool",
+                "offset": 8,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(OwnableStorage)13_storage": {
+            "label": "struct OwnableUpgradeable.OwnableStorage",
+            "members": [
+              {
+                "label": "_owner",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint64": {
+            "label": "uint64",
+            "numberOfBytes": "8"
+          }
+        },
+        "namespaces": {
+          "bulksendtokens.xyz.bulksender.storage.bulksender": [
+            {
+              "contract": "BulkSender",
+              "label": "_receiverAddress",
+              "type": "t_address",
+              "src": "contracts/BulkSender.sol:15",
+              "offset": 0,
+              "slot": "0"
+            },
+            {
+              "contract": "BulkSender",
+              "label": "_txFee",
+              "type": "t_uint256",
+              "src": "contracts/BulkSender.sol:16",
+              "offset": 0,
+              "slot": "1"
+            },
+            {
+              "contract": "BulkSender",
+              "label": "_vipFee",
+              "type": "t_uint256",
+              "src": "contracts/BulkSender.sol:17",
+              "offset": 0,
+              "slot": "2"
+            },
+            {
+              "contract": "BulkSender",
+              "label": "_vipList",
+              "type": "t_mapping(t_address,t_bool)",
+              "src": "contracts/BulkSender.sol:18",
+              "offset": 0,
+              "slot": "3"
+            }
+          ],
+          "erc7201:openzeppelin.storage.Ownable": [
+            {
+              "contract": "OwnableUpgradeable",
+              "label": "_owner",
+              "type": "t_address",
+              "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:24",
+              "offset": 0,
+              "slot": "0"
+            }
+          ],
+          "erc7201:openzeppelin.storage.Initializable": [
+            {
+              "contract": "Initializable",
+              "label": "_initialized",
+              "type": "t_uint64",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:69",
+              "offset": 0,
+              "slot": "0"
+            },
+            {
+              "contract": "Initializable",
+              "label": "_initializing",
+              "type": "t_bool",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:73",
+              "offset": 8,
+              "slot": "0"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

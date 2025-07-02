@@ -13,6 +13,7 @@ describe("TokenLocker", function () {
       "Symbol",
       18,
       ethers.parseUnits("1000000"),
+      owner.address, // Owner address for the ERC20 token
     ]);
     await erc20Token.waitForDeployment();
 

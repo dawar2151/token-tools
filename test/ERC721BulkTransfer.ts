@@ -12,7 +12,7 @@ describe("ERC721 Bulk Transfer", function () {
 
     const erc721Tester = await hre.ethers.deployContract(
       "ERC721Token",
-      ["Name", "Symbol"],
+      ["Name", "Symbol", owner.address],
       {},
     );
     await erc721Tester.waitForDeployment();

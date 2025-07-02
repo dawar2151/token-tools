@@ -12,7 +12,7 @@ describe("ERC1155 Bulk Transfer", function () {
 
     const erc1155Tester = await hre.ethers.deployContract(
       "ERC1155Token",
-      ["baseuri"],
+      ["baseuri", owner.address],
       {},
     );
     const erc1155BulkSender = await hre.ethers.deployContract("BulkSender", []);
