@@ -13,7 +13,7 @@ contract ERC20Token is ERC20, Ownable {
         uint256 totalSupply,
         address owner
     ) ERC20(name, symbol) Ownable(owner) {
-        _mint(msg.sender, totalSupply * 10 ** _customDecimals);
+        _mint(owner, totalSupply * 10 ** _customDecimals);
         _decimals = _customDecimals;
     }
     function mint(address account, uint256 amount) public onlyOwner {

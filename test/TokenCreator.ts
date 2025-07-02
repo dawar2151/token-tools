@@ -13,11 +13,26 @@ describe("TokenCreator", () => {
   });
 
   it("should create a token with the correct length", async () => {
-    await expect(
-      tokenCreator.createERC20("TOS", "TSA", 12, 1000, {
+    const [owner] = await hre.ethers.getSigners();
+
+    const tx = await tokenCreator
+      .connect(owner)
+      .createERC20("TOS", "TSA", 12, 1000, {
         value: hre.ethers.parseEther("0.1"),
-      }),
-    ).to.emit(tokenCreator, "ERC20Created");
+      });
+
+    const receipt = await tx.wait();
+    const event = receipt.logs.find(
+      (log: any) => log.fragment && log.fragment.name === "ERC20Created",
+    );
+
+    expect(event).to.not.be.undefined;
+    const tokenAddress = event.args.tokenAddress;
+    console.log("Token Address:", tokenAddress);
+    const token = await hre.ethers.getContractAt("ERC20Token", tokenAddress);
+
+    const balance = await token.balanceOf(owner.address);
+    expect(balance).to.equal("1000000000000000"); // Assuming 1000 is the initial supply
   });
   it("should create an ERC721 token with the correct parameters", async () => {
     await expect(
