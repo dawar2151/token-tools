@@ -27,10 +27,10 @@ contract BulkSenderV2 is IBulkSender, Initializable, OwnableUpgradeable {
         }
     }
 
-    function initialize(address receiverAddress, address owner) public initializer {
+    function initialize(address _receiverAddress, address owner) public initializer {
         __Ownable_init(owner);
         BulkSenderStorage storage $ = _getBulkSenderStorage();
-        $._receiverAddress = receiverAddress;
+        $._receiverAddress = _receiverAddress;
         $._txFee = 0.007 ether;
         $._vipFee = 0.1 ether;
     }

@@ -1,71 +1,120 @@
 import { expect } from "chai";
+import { AddressLike } from "ethers";
 import hre from "hardhat";
 
 describe("TokenCreator", () => {
   let tokenCreator: any;
+  let fee = hre.ethers.parseEther("0.1");
+  let ownerAddress: AddressLike;
+  let creatorAddress: AddressLike;
+  let creatorAccount: any;
+
   beforeEach(async () => {
-    const [owner, account1, account2, account3] = await hre.ethers.getSigners();
-    tokenCreator = await hre.ethers.deployContract(
-      "TokenCreator",
-      [hre.ethers.parseEther("0.1"), owner.address],
-      {},
-    );
+    const [owner, account1] = await hre.ethers.getSigners();
+    creatorAccount = account1;
+    ownerAddress = owner.address;
+    creatorAddress = account1.address;
+
+    tokenCreator = await hre.ethers.deployContract("TokenCreator", [fee, ownerAddress]);
   });
 
-  it("should create a token with the correct length", async () => {
-    const [owner] = await hre.ethers.getSigners();
+  const extractTokenAddressFromEvent = async (
+    tx: any,
+    eventName: string
+  ): Promise<string> => {
+    const receipt = await tx.wait();
+    const eventSignature = hre.ethers.id(`${eventName}(address)`);
+    const log = receipt.logs.find((log: any) => log.topics[0] === eventSignature);
 
-    const tx = await tokenCreator
-      .connect(owner)
-      .createERC20("TOS", "TSA", 12, 1000, {
-        value: hre.ethers.parseEther("0.1"),
+    expect(log, `${eventName} event not found`).to.not.be.undefined;
+
+    return hre.ethers.getAddress(log.data.slice(26));
+  };
+
+  describe("Creation Events", () => {
+    it("should emit ERC20Created", async () => {
+      await expect(
+        tokenCreator.createERC20("TOS", "TSA", 12, 1000, { value: fee })
+      ).to.emit(tokenCreator, "ERC20Created");
+    });
+
+    it("should emit ERC721Created", async () => {
+      await expect(
+        tokenCreator.createERC721("TOS721", "TSA721", { value: fee })
+      ).to.emit(tokenCreator, "ERC721Created");
+    });
+
+    it("should emit ERC1155Created", async () => {
+      await expect(
+        tokenCreator.createERC1155("https://myuri", { value: fee })
+      ).to.emit(tokenCreator, "ERC1155Created");
+    });
+  });
+
+  describe("Fee Handling", () => {
+    it("should revert if the value is less than required", async () => {
+      await expect(
+        tokenCreator.createERC20("TOS", "TSA", 12, 1000, {
+          value: hre.ethers.parseEther("0.05"),
+        })
+      ).to.be.revertedWithCustomError(tokenCreator, "InsufficientFee");
+    });
+
+    const checkOwnerBalanceIncrease = async (createFn: () => Promise<void>) => {
+      const initial = await hre.ethers.provider.getBalance(ownerAddress);
+      await createFn();
+      const final = await hre.ethers.provider.getBalance(ownerAddress);
+      expect(final).to.equal(initial + fee);
+    };
+
+    it("should transfer the fee when creating an ERC20 token", async () => {
+      await checkOwnerBalanceIncrease(() =>
+        tokenCreator.connect(creatorAccount).createERC20("TOS", "TSA", 12, 1000, { value: fee })
+      );
+    });
+
+    it("should transfer the fee when creating an ERC721 token", async () => {
+      await checkOwnerBalanceIncrease(() =>
+        tokenCreator.connect(creatorAccount).createERC721("TOS721", "TSA721", { value: fee })
+      );
+    });
+
+    it("should transfer the fee when creating an ERC1155 token", async () => {
+      await checkOwnerBalanceIncrease(() =>
+        tokenCreator.connect(creatorAccount).createERC1155("https://myuri", { value: fee })
+      );
+    });
+  });
+
+  describe("Ownership Assignment", () => {
+    it("should assign ERC20 token ownership to the creator", async () => {
+      const tx = await tokenCreator.connect(creatorAccount).createERC20("TOS", "TSA", 12, 1000, {
+        value: fee,
       });
 
-    const receipt = await tx.wait();
-    const event = receipt.logs.find(
-      (log: any) => log.fragment && log.fragment.name === "ERC20Created",
-    );
-
-    expect(event).to.not.be.undefined;
-    const tokenAddress = event.args.tokenAddress;
-    console.log("Token Address:", tokenAddress);
-    const token = await hre.ethers.getContractAt("ERC20Token", tokenAddress);
-
-    const balance = await token.balanceOf(owner.address);
-    expect(balance).to.equal("1000000000000000"); // Assuming 1000 is the initial supply
-  });
-  it("should create an ERC721 token with the correct parameters", async () => {
-    await expect(
-      tokenCreator.createERC721("TOS721", "TSA721", {
-        value: hre.ethers.parseEther("0.1"),
-      }),
-    ).to.emit(tokenCreator, "ERC721Created");
-  });
-
-  it("should create an ERC1155 token with the correct parameters", async () => {
-    await expect(
-      tokenCreator.createERC1155("https://myuri", {
-        value: hre.ethers.parseEther("0.1"),
-      }),
-    ).to.emit(tokenCreator, "ERC1155Created");
-  });
-  it("should revert if the value is less than the required amount", async () => {
-    await expect(
-      tokenCreator.createERC20("TOS", "TSA", 12, 1000, {
-        value: hre.ethers.parseEther("0.05"),
-      }),
-    ).to.be.revertedWithCustomError(tokenCreator, "InsufficientFee");
-  });
-  //should withdraw fee test
-  it("should withdraw the fee correctly", async () => {
-    const [owner, account1] = await hre.ethers.getSigners();
-    const initialBalance = await hre.ethers.provider.getBalance(owner.address);
-    await tokenCreator.connect(account1).createERC20("TOS", "TSA", 12, 1000, {
-      value: hre.ethers.parseEther("0.1"),
+      const tokenAddress = await extractTokenAddressFromEvent(tx, "ERC20Created");
+      const erc20 = await hre.ethers.getContractAt("ERC20Token", tokenAddress);
+      expect(await erc20.owner()).to.equal(creatorAccount.address);
     });
-    await tokenCreator.withdraw();
 
-    const finalBalance = await hre.ethers.provider.getBalance(owner.address);
-    expect(finalBalance).to.be.greaterThan(initialBalance);
+    it("should assign ERC721 token ownership to the creator", async () => {
+      const tx = await tokenCreator.connect(creatorAccount).createERC721("TOS721", "TSA721", {
+        value: fee,
+      });
+
+      const tokenAddress = await extractTokenAddressFromEvent(tx, "ERC721Created");
+      const erc721 = await hre.ethers.getContractAt("ERC721Token", tokenAddress);
+      expect(await erc721.owner()).to.equal(creatorAccount.address);
+    });
+
+    it("should assign ERC1155 token ownership to the creator", async () => {
+      const tx = await tokenCreator.connect(creatorAccount).createERC1155("https://myuri", {
+        value: fee,
+      });
+
+      const tokenAddress = await extractTokenAddressFromEvent(tx, "ERC1155Created");
+      const erc1155 = await hre.ethers.getContractAt("ERC1155Token", tokenAddress);
+      expect(await erc1155.owner()).to.equal(creatorAccount.address);
+    });
   });
 });
