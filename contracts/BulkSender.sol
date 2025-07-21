@@ -34,8 +34,8 @@ contract BulkSender is IBulkSender, Initializable, OwnableUpgradeable, UUPSUpgra
         __UUPSUpgradeable_init();
         BulkSenderStorage storage $ = _getBulkSenderStorage();
         $._receiverAddress = _receiverAddress;
-        $._txFee = 0.007 ether;
-        $._vipFee = 0.1 ether;
+        $._txFee = 0.002 ether;
+        $._vipFee = 1 ether;
     }
 
     constructor() {}

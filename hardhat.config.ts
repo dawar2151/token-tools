@@ -41,7 +41,7 @@ var networks = {
     accounts: [privateKey],
   },
   base: {
-    url: `https://base-mainnet.g.alchemy.com/v2/${alchemyKey}`,
+    url: `https://base-mainnet.infura.io/v3/${infuraKey}`,
     accounts: [privateKey],
   },
   avalanche: {

@@ -7,7 +7,7 @@
     "@nomicfoundation/hardhat-ignition-ethers": "^0.15.9",
     "@nomicfoundation/hardhat-ignition-viem": "^0.15.9",
     "@nomicfoundation/hardhat-network-helpers": "^1.0.12",
-    "@nomicfoundation/hardhat-verify": "^2.0.10",
+    "@nomicfoundation/hardhat-verify": "^2.1.0",
     "@nomicfoundation/hardhat-viem": "^2.0.6",
     "@nomicfoundation/ignition-core": "^0.15.9",
     "@types/chai": "^4.3.20",
