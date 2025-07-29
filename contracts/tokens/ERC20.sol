@@ -19,9 +19,6 @@ contract ERC20Token is ERC20, Ownable {
     function mint(address account, uint256 amount) public onlyOwner {
         _mint(account, amount);
     }
-    function burn(address account, uint256 amount) public onlyOwner {
-        _burn(account, amount);
-    }
     function decimals() public view virtual override returns (uint8) {
         return _decimals;
     }

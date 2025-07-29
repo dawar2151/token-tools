@@ -9,7 +9,4 @@ contract ERC1155Token is ERC1155, Ownable {
     function mint(address account, uint256 tokenId, uint256 amount) public onlyOwner {
         _mint(account, tokenId, amount, "");
     }
-    function burn(address account, uint256 tokenId, uint256 amount) public onlyOwner {
-        _burn(account, tokenId, amount);
-    }
 }
