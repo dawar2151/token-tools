@@ -44,6 +44,11 @@ var networks = {
     url: `https://base-mainnet.infura.io/v3/${infuraKey}`,
     accounts: [privateKey],
   },
+  bnb: {
+    url: `https://bsc-dataseed.binance.org/`, // Official BNB RPC URL
+    chainId: 56, // Mainnet chain ID for BNB
+    accounts: [privateKey], // Use your private key
+  },
   avalanche: {
     url: `https://avax-mainnet.g.alchemy.com/v2/${alchemyKey}`,
     accounts: [privateKey],

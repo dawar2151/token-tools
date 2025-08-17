@@ -55,9 +55,16 @@ npm i
 
 3. **Build and Deploy Contracts:**
 
-```bash
-npm run deploy:sepolia
-```
+# Network Deployment Commands
+## Ethereum
+- ```npm run deploy-token-creator -- --network mainnet```
+- ```npm run deploy-bulksender -- --network mainnet```
+## Base
+- ```npm run deploy-token-creator -- --network base```
+- ```npm run deploy-bulksender -- --network base```
+## BNB
+- ```npm run deploy-token-creator -- --network bnb```
+- ```npm run deploy-bulksender -- --network bnb```
 
 4. ** Verify contracts:**
 
